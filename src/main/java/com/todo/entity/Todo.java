@@ -3,6 +3,8 @@
  */
 package com.todo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,19 +38,25 @@ public class Todo {
 	@Column(name="title", nullable = false, length = 50)
 	private String title;
 	
-	@Column(name="complete")
-	private boolean complete;
+	@Column(name="completed")
+	private boolean completed;
+	
+	@Column(name="created_on")
+	private Date createdOn = new Date();
 
 	/**
 	 * @param id
 	 * @param title
+	 * @param description
 	 * @param complete
+	 * @param todoCreated
 	 */
-	public Todo(Long id, String title, boolean complete) {
+	public Todo(Long id, String title, boolean completed, Date createdOn) {
 		super();
 		this.id = id;
 		this.title = title;
-		this.complete = complete;
+		this.completed = completed;
+		this.createdOn = createdOn;
 	}
 
 	/**
@@ -82,22 +90,36 @@ public class Todo {
 	/**
 	 * @return the complete
 	 */
-	public boolean isComplete() {
-		return complete;
+	public boolean isCompleted() {
+		return completed;
 	}
 
 	/**
 	 * @param complete the complete to set
 	 */
-	public void setComplete(boolean complete) {
-		this.complete = complete;
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	/**
+	 * @return the createdOn
+	 */
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	/**
+	 * @param createdOn the createdOn to set
+	 */
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	@Override
 	public String toString() {
-		return "Todo [id=" + id + ", title=" + title + ", complete=" + complete + "]";
+		return "Todo [id=" + id + ", title=" + title + ", completed=" + completed + ", createdOn=" + createdOn + "]";
 	}
-	
-	
 
+	
+	
 }
