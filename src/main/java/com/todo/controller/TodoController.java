@@ -47,6 +47,13 @@ public class TodoController {
 		
 	}
 	
+	@GetMapping("/getTodoById/{id}")
+	public ResponseEntity<Todo> getTodoById (@PathVariable("id")long id){
+		return repository.findById(id)
+                .map(todo -> ResponseEntity.ok().body(todo))
+                .orElse(ResponseEntity.notFound().build());
+	}
+	
 	@PostMapping(value="/createTodo", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> createTodo(@Valid @RequestBody Todo todo) {
 		HttpHeaders headers = new HttpHeaders();
@@ -62,7 +69,7 @@ public class TodoController {
         .orElseThrow(() -> new ResourceNotFoundException("Todo Task not found for this id :: " + todoId));
 
 		todo.setTitle(todoDetails.getTitle());
-		todo.setComplete(todoDetails.isComplete());
+		todo.setCompleted(todoDetails.isCompleted());
         final Todo updatedTodo = repository.save(todo);
         return ResponseEntity.ok(updatedTodo);
     }
